@@ -17,16 +17,17 @@
       onDetach: $.noop,
       onShow: $.noop,
       onHide: $.noop,
-      bottomOffset: 0,
-      completeDelay: 300,
-      completeTiming: 200,
+      bottomOffset: 0
     }, options);
 
     var $window = $(window),
         $document = $(document),
         lastPosition = $window.scrollTop(),
         initialBarPosition = $bar.offset().top,
-        autoCompleteTimer;
+        isiOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+
+    // Get out if on iOS because it sucks
+    if (isiOS) return;
 
     $window.on('scroll.revealbar', function() {
       var currentPosition = $window.scrollTop(),
@@ -36,9 +37,6 @@
 
       // Ignore elastic scrolling
       if (currentPosition < 0 || currentPosition > ($document.height() - $window.height())) return;
-
-      // Cancel auto-completion timer
-      if (autoCompleteTimer) clearTimeout(autoCompleteTimer);
 
       // Scrolling up
       if (currentPosition < lastPosition) {
@@ -59,14 +57,6 @@
           };
         };
 
-        autoCompleteTimer = setTimeout(function() {
-          if (currentPosition > barTopPosition) {
-            $bar.animate({ 'top': lastPosition }, options.completeTiming, function() {
-              options.onShow();
-            });
-          };
-        }, options.completeDelay);
-
       // Scrolling down
       // or, Page Load not at top
       } else if (currentPosition > lastPosition || (currentPosition === lastPosition && currentPosition !== 0)) {
@@ -83,17 +73,6 @@
             'top': barTopPosition
           });
         };
-
-        autoCompleteTimer = setTimeout(function() {
-          if (currentPosition > barOffsetHeight &&
-              currentPosition > barTopPosition &&
-              currentPosition !== barTopPosition + barOffsetHeight) {
-            $bar.css('position', 'absolute');
-            $bar.animate({ 'top': lastPosition - barOffsetHeight }, options.completeTiming, function() {
-              options.onHide();
-            });
-          };
-        }, options.completeDelay);
       };
 
       // Remember current position as last position

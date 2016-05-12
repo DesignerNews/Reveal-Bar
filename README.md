@@ -4,7 +4,7 @@
 
 A jQuery plugin to hide a top header bar as you scroll down, reveal it as you scroll back up, and fix it to the top of the window when visible. It is heavily inspired by (and even uses code from) [eduardomb](https://github.com/eduardomb)'s [scroll-up-bar](https://github.com/eduardomb/scroll-up-bar).
 
-The biggest differences between this plugin and _scroll-up-bar_ is that it supports a bottom offset, works the same on iOS (since iOS 8+ has arrived), and adds a few extra options.
+The biggest differences between this plugin and _scroll-up-bar_ is that it supports a bottom offset, doesn't initiate on iOS (too many issues), and adds a few extra options.
 
 ## Basic Usage
 
@@ -37,14 +37,6 @@ Reveal Bar uses some of the same options as _scroll-up-bar_, and adds some new o
 * _Number_ `bottomOffset`
 
     The amount in pixels that the element should be offset on the bottom when scrolling.
-
-* _Number_ `completeDelay`
-
-    The amount of time to wait in milliseconds before auto-completing a show or hide if the bar is partially visible.
-
-* _Number_ `completeTiming`
-
-    The amount of time it should take in milliseconds to auto-complete showing or hiding the bar if it is partially visible.
 
 ## Methods
 
